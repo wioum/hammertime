@@ -29,13 +29,13 @@ While 1
 	If WinActive($title) Then
 		For $b In $dicButton 
 			If _IsPressed($b, $dll) Then
-				$cmd = "{"
+				$cmd = ""
 				For $m In $dicMod 
 					If _IsPressed($m, $dll) Then
 						$cmd &= $dicMod.Item($m)
-					EndIf					
+					EndIf
 				Next
-				$cmd &= $dicButton.Item($b) & "}"
+				$cmd &= "{" & $dicButton.Item($b) & "}"
 				Send($cmd)
 			EndIf
 		Next
