@@ -33,11 +33,9 @@ While 1
 				For $m In $dicMod 
 					If _IsPressed($m, $dll) Then
 						$cmd &= $dicMod.Item($m)
-						ExitLoop
 					EndIf					
 				Next
 				$cmd &= $dicButton.Item($b) & "}"
-				ConsoleWrite($cmd)
 				Send($cmd)
 			EndIf
 		Next
