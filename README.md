@@ -1,2 +1,2 @@
 # Hammer time
-[Button masher](klanen.org/download/hammertime.exe).
+[Button masher](http://klanen.org/download/hammertime.exe).
