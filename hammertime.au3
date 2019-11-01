@@ -1,8 +1,12 @@
 #include <Misc.au3>
+#include "lib/commandline.au3"
+
+Opt("TrayAutoPause", 0)
+Opt("WinTitleMatchMode", 2)
 
 $dll = DllOpen("user32.dll")
 
-$title = "World of Warcraft"
+$title = ""
 $t1 = 100
 $t2 = 200
 
@@ -22,6 +26,23 @@ $dicMod = ObjCreate("Scripting.Dictionary")
 $dicMod.Add("10","+") ; shift
 $dicMod.Add("11","^") ; ctrl
 $dicMod.Add("12","!") ; alt
+
+$params = GetCommandLineParameters($CmdLineRaw,"/")
+
+For $param In $params
+	Switch ($param)
+		Case "title"
+			MsgBox(0,'Param',$param & ' = ' & $params.Item($param))
+			$title = $params.Item($param)
+		Case Else
+	EndSwitch
+Next
+
+TraySetToolTip("Hammer Time")
+If $title <> "" Then
+	TrayItemSetState(TrayCreateItem("Hammer Time"),128)
+	TrayItemSetState(TrayCreateItem("@ " & $title),128)
+EndIf
 
 $cmd = ""
 
