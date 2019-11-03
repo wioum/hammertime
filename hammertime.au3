@@ -4,8 +4,7 @@
 Opt("TrayAutoPause", 0)
 Opt("WinTitleMatchMode", 2)
 
-$dll = DllOpen("user32.dll")
-
+$dll = ""
 $title = ""
 $t1 = 100
 $t2 = 200
@@ -31,21 +30,22 @@ $params = GetCommandLineParameters($CmdLineRaw,"/")
 
 For $param In $params
 	MsgBox(0,'Param',$param & ' = ' & $params.Item($param))
-	If $param == "title" Then
+	If $param == "target" Then
 		$title = $params.Item($param)
 	EndIf
 Next
 
 TraySetToolTip("Hammer Time")
-If $title <> "" Then
-	TrayItemSetState(TrayCreateItem("Hammer Time"),128)
-	TrayItemSetState(TrayCreateItem("@ " & $title),128)
+TrayItemSetState(TrayCreateItem("Hammer Time"),128)
+If $title <> "" Then	
+	TrayItemSetState(TrayCreateItem("Target = " & $title),128)
 EndIf
 
 $cmd = ""
 
 While 1
 	If WinActive($title) Then
+		$dll = DllOpen("user32.dll")
 		For $b In $dicButton 
 			If _IsPressed($b, $dll) Then
 				$cmd = ""
@@ -59,7 +59,7 @@ While 1
 			EndIf
 		Next
 	EndIf
+	DllClose($dll)
 	Sleep(Random($t1,$t2,1))
 WEnd
 
-DllClose($dll)
