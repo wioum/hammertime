@@ -1,5 +1,5 @@
 #include <Misc.au3>
-#include "lib/commandline.au3"
+#include "lib/configurations.au3"
 
 Opt("TrayAutoPause", 0)
 Opt("WinTitleMatchMode", 2)
@@ -26,8 +26,15 @@ $dicMod.Add("10","+") ; shift
 $dicMod.Add("11","^") ; ctrl
 $dicMod.Add("12","!") ; alt
 
-$params = GetCommandLineParameters($CmdLineRaw,"/")
+$params = GetConfigurationParameters("config.ini")
+For $param In $params
+	MsgBox(0,'Param',$param & ' = ' & $params.Item($param))
+	If $param == "target" Then
+		$title = $params.Item($param)
+	EndIf
+Next
 
+$params = GetCommandLineParameters($CmdLineRaw,"/")
 For $param In $params
 	MsgBox(0,'Param',$param & ' = ' & $params.Item($param))
 	If $param == "target" Then
