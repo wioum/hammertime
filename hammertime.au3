@@ -30,12 +30,10 @@ $dicMod.Add("12","!") ; alt
 $params = GetCommandLineParameters($CmdLineRaw,"/")
 
 For $param In $params
-	Switch ($param)
-		Case "title"
-			MsgBox(0,'Param',$param & ' = ' & $params.Item($param))
-			$title = $params.Item($param)
-		Case Else
-	EndSwitch
+	MsgBox(0,'Param',$param & ' = ' & $params.Item($param))
+	If $param == "title" Then
+		$title = $params.Item($param)
+	EndIf
 Next
 
 TraySetToolTip("Hammer Time")
