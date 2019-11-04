@@ -1,5 +1,5 @@
 # Hammer Time
-A script for helping with button mashing situations. When 0-9 is held down the button is pressed continuously until released.
+A script for helping with button mashing situations. When 0-9 is held down the button is pressed continuously until released. Modifiers shift, alt and ctrl are supported as well.
 ## Configurations
 Hammer Time supports the following parameters which can be entered at runtime as slash commands or entered into config.ini (located in the root folder).
 
