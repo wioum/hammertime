@@ -6,8 +6,8 @@ Opt("WinTitleMatchMode", 2)
 
 $dll = ""
 $title = ""
-$t1 = 100
-$t2 = 200
+$t1 = Null
+$t2 = Null
 
 $dicButton = ObjCreate("Scripting.Dictionary")
 $dicButton.Add("30","0")
@@ -29,24 +29,47 @@ $dicMod.Add("12","!") ; alt
 $params = GetConfigurationParameters("config.ini")
 For $param In $params
 	MsgBox(0,'Param',$param & ' = ' & $params.Item($param))
-	If $param == "target" Then
-		$title = $params.Item($param)
-	EndIf
+	Switch $param
+		Case "target"
+			$title = $params.Item($param)
+		Case "timing"
+			$t = _StringExplode($params.Item($param)," ")
+			If UBound($t) > 1 Then
+				$t2 = $t[1]
+			Else
+				$t2 = $t[0]
+			EndIf
+			$t1 = $t[0]
+	EndSwitch
 Next
 
 $params = GetCommandLineParameters($CmdLineRaw,"/")
 For $param In $params
 	MsgBox(0,'Param',$param & ' = ' & $params.Item($param))
-	If $param == "target" Then
-		$title = $params.Item($param)
-	EndIf
+	Switch $param
+		Case "target"
+			$title = $params.Item($param)
+		Case "timing"
+			$t = _StringExplode($params.Item($param)," ")
+			If UBound($t) > 1 Then
+				$t2 = $t[1]
+			Else
+				$t2 = $t[0]
+			EndIf
+			$t1 = $t[0]
+	EndSwitch
 Next
+
+If $t1 = Null Or $t2 = Null Then
+	$t1 = 100
+	$t2 = 200
+EndIf
 
 TraySetToolTip("Hammer Time")
 TrayItemSetState(TrayCreateItem("Hammer Time"),128)
-If $title <> "" Then	
-	TrayItemSetState(TrayCreateItem("Target = " & $title),128)
-EndIf
+TrayItemSetState(TrayCreateItem(""),128)
+TrayItemSetState(TrayCreateItem("Target " & @TAB & (($title == "") ? "<not defined>" : $title)),128)
+TrayItemSetState(TrayCreateItem("Timing " & @TAB & (($t1 == $t2) ? $t1 : $t1 & "-" & $t2) & "ms"),128)
 
 $cmd = ""
 
