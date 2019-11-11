@@ -27,6 +27,7 @@ $dicMod.Add("11","^") ; ctrl
 $dicMod.Add("12","!") ; alt
 
 $params = GetConfigurationParameters("config.ini")
+<<<<<<< Updated upstream
 For $param In $params
 	MsgBox(0,'Param',$param & ' = ' & $params.Item($param))
 	Switch $param
@@ -42,6 +43,24 @@ For $param In $params
 			$t1 = $t[0]
 	EndSwitch
 Next
+=======
+If $params <> -1 Then
+	For $param In $params
+		Switch $param
+			Case "target"
+				$title = $params.Item($param)
+			Case "timing"
+				$t = _StringExplode($params.Item($param)," ")
+				If UBound($t) > 1 Then
+					$t2 = $t[1]
+				Else
+					$t2 = $t[0]
+				EndIf
+				$t1 = $t[0]
+		EndSwitch
+	Next
+EndIf
+>>>>>>> Stashed changes
 
 $params = GetCommandLineParameters($CmdLineRaw,"/")
 For $param In $params
